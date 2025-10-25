@@ -80,7 +80,7 @@ def calculate_mean(weather_data):
     print(numbers)
 
     # and calculate its mean
-    mean = sum(numbers) / len(numbers)
+     mean = sum(numbers) / len(numbers)
     return mean
 
 # Example usage: 

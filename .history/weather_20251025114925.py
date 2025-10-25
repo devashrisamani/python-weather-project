@@ -72,16 +72,20 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    # Handle an empty list 
+
     if not weather_data:
         return 0.0
     # take the list i.e. the weather_data 
-    numbers = [float(num) for num in weather_data]
-    print(numbers)
+    numbers = [weather_data]
+    print (numbers)
 
     # and calculate its mean
-    mean = sum(numbers) / len(numbers)
-    return mean
+    # but since it is a list, you will have to loop through each number in the list 
+    for num in numbers:
+        # formula to calculate mean
+        print(num)
+        mean = sum(num)/len(num)
+        return mean 
 
 # Example usage: 
 numbers = [51.0, 58.2, 59.9, 52.4, 52.1, 48.4, 47.8, 53.43]

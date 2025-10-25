@@ -72,16 +72,17 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    # Handle an empty list 
-    if not weather_data:
-        return 0.0
     # take the list i.e. the weather_data 
-    numbers = [float(num) for num in weather_data]
-    print(numbers)
+    numbers = [weather_data]
+    print (numbers)
 
     # and calculate its mean
-    mean = sum(numbers) / len(numbers)
-    return mean
+    # but since it is a list, you will have to loop through each number in the list 
+    for num in numbers:
+        # formula to calculate mean
+        print(num)
+        mean = sum(num)/len(num)
+        return mean 
 
 # Example usage: 
 numbers = [51.0, 58.2, 59.9, 52.4, 52.1, 48.4, 47.8, 53.43]
@@ -132,17 +133,15 @@ def find_min(weather_data):
 
     if not weather_data:
         return ()
-    
-    new_weather_data = [float(element) for element in weather_data]
 
 
     # Initialize min_value with first element of the list weather_data
-    min_value = new_weather_data[0]
+    min_value = weather_data[0]
     min_index = 0
 
     # Iterate through the list to find the smallest element 
 
-    for current_index, current_value in enumerate(new_weather_data):
+    for current_index, current_value in enumerate(weather_data):
 
         # If the current value is smaller than the current smallest value 
 
@@ -150,14 +149,33 @@ def find_min(weather_data):
             min_value = current_value
             min_index = current_index
         
-    return (min_value, min_index)
+        return (min_value, min_index)
+
+
+
 
 
 #  Example usage 
-weather_data = [49, 57, 56, 55, 53]
+weather_data = [1,1,2]
 result = find_min(weather_data)
 print(result)
 
+
+    # how to check for the minimum, there is no other number smaller than it
+    # If that is true, check for its index
+    # If the number repeats itself, return the index of the last example in the list 
+
+
+
+
+
+#     numbers = [weather_data]
+#     min_value = numbers.index(min(numbers))
+#     return min_value
+
+# numbers = [9,8,7]
+# result = find_min(numbers)
+# print(result)
 
 # Can do: 6
 def find_max(weather_data):
@@ -168,27 +186,9 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    if not weather_data:
-        return ()
-    
-    new_weather_data = [float(element) for element in weather_data]
+    pass
 
-    max_value = new_weather_data[0]
-    max_index = 0
-
-    for current_index, current_value in enumerate(new_weather_data):
-        if current_value >= max_value:
-            max_value = current_value
-            max_index = current_index
-
-    return(max_value, max_index)            
-
-#  Example usage 
-weather_data = [49, 57, 56, 55, 53]
-result = find_max(weather_data)
-print(result)
-
-
+# Can do: 7 - Google how to handle multi-line f strings and making paragraphs - you can check the output files and test examples to see what this file expects 
 def generate_summary(weather_data):
     """Outputs a summary for the given weather data.
 
@@ -197,76 +197,16 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    # Handle an empty list
-    if not weather_data:
-        return "No forecast, take each day as it comes :p"
-    
-    # Find out the number of days
-    num_of_days = len(weather_data)
-
-    # Create empty lists for all the data we need to extract
-    min_temp_c =[]
-    max_temp_c = []
-    iso_dates = []
-
-    # Loop through the list of lists, set the indices for each data type
-    # Then convert all the data in the extracted list to Celcius 
-    # Now, append the values in the indices together, data with date, min temp with min temp etc 
-    for day_temp in weather_data:
-        iso = day_temp[0]
-        min_f = day_temp[1]
-        max_f = day_temp[2]
-        min_c = convert_f_to_c(min_f)
-        max_c = convert_f_to_c(max_f)
-        date = iso
-        min_temp_c.append(min_c)
-        max_temp_c.append(max_c)
-        iso_dates.append(date)
-
-    # Now, I need to find the extremes + the day they occurred
-    # Since find_min and find_max return a tuple of (value, index), I can unpack them into two variables each
-    lowest_c, lowest_index = find_min(min_temp_c)
-    highest_c, highest_index = find_max(max_temp_c)
-
-    # Convert the index to the date using the iso_dates list
-    lowest_date = convert_date(iso_dates[lowest_index])
-    highest_date = convert_date(iso_dates[highest_index])
+    pass
+    # Pick the path and all the values you need to calculate, lowest, date, day
+    # Create an empty min and mix list, and a day as the length of the weather data 
+    # Do a for loop
+    # Use the above defined functions and add teh degree symbol
 
 
-    # Now I need to get the averages of the min and max temp
-
-    avg_low_c = calculate_mean(min_temp_c)
-    avg_high_c = calculate_mean(max_temp_c)
-
-    # Adding the degree symbol
-    
-    lowest_c_str = format_temperature(round(lowest_c,1))
-    highest_c_str = format_temperature(round(highest_c,1))
-    avg_low_str = format_temperature(round(avg_low_c,1))
-    avg_high_str = format_temperature(round(avg_high_c,1))
-
-    # write a summary
-
-    summary = ""
-
-    summary += f"{num_of_days} Day Overview\n"
-    summary += f"  The lowest temperature will be {lowest_c_str}, and will occur on {lowest_date}.\n"
-    summary += f"  The highest temperature will be {highest_c_str}, and will occur on {highest_date}.\n"
-    summary += f"  The average low this week is {avg_low_str}.\n"
-    summary += f"  The average high this week is {avg_high_str}.\n"
-    return summary
-
-    # First Attempt -incomplete
-    # weather_data = []
-    # lowest_temp_day = find_min(weather_data)
-    # highest_temp_day = find_max(weather_data)
-    # # Add a for loop here potentially 
-    # list_lowest_temp = () 
-    # list_highest_temp = ()
-    # avg_low_combined = calculate_mean(list_lowest_temp)
-    # avg_high_combined = calculate_mean (list_highest_temp)
 
 
+# Can do: 8 
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
 
@@ -275,25 +215,4 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    if not weather_data:
-        return "I'd rather you google it"
-    
-    summary_str = "" 
-
-    for day_temp in weather_data:
-        iso_date = day_temp[0]
-        min_f = day_temp[1]
-        max_f = day_temp[2]
-        min_c = convert_f_to_c(min_f)
-        max_c = convert_f_to_c(max_f)
-        readable_date = convert_date(iso_date)
-        min_c_str = format_temperature(round(min_c,1))
-        max_c_str = format_temperature(round(max_c,1))
-
-        daily_summary = f"---- {readable_date} ----\n"
-        daily_summary += f"  Minimum Temperature: {min_c_str}\n"
-        daily_summary += f"  Maximum Temperature: {max_c_str}\n"
-        daily_summary += "\n"
-        summary_str += daily_summary
-
-    return summary_str  
+    pass

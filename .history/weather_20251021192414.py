@@ -1,0 +1,215 @@
+import csv
+from datetime import datetime
+
+DEGREE_SYMBOL = u"\N{DEGREE SIGN}C"
+
+
+def format_temperature(temp):
+    """Takes a temperature and returns it in string format with the degrees
+        and Celcius symbols.
+
+    Args:
+        temp: A string representing a temperature.
+    Returns:
+        A string contain the temperature and "degrees Celcius."
+    """
+    return f"{temp}{DEGREE_SYMBOL}"
+
+
+def convert_date(iso_string):
+    """Converts and ISO formatted date into a human-readable format.
+
+    Args:
+        iso_string: An ISO date string.
+    Returns:
+        A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
+    """
+    # Convert the ISO (year-month-day-hour-minutes-seconds-milliseconds) string into human format using the datetime module
+
+    #Use datetime.fromisoformat() to convert the string to a datetime object, then use strftime() to format the date
+    convert_date = datetime.fromisoformat(iso_string)
+    # Format the date to the desired output
+    date = convert_date.strftime("%A %d %B %Y")
+    # Return the formatted date
+    return date
+
+# Example usage:
+iso_string = ("2025-10-18T00:00:00.000")
+new_date = convert_date(iso_string)
+print(new_date)
+
+
+
+def convert_f_to_c(temp_in_fahrenheit):
+    """Converts a temperature from Fahrenheit to Celcius.
+
+    Args:
+        temp_in_fahrenheit: float representing a temperature.
+    Returns:
+        A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
+    """
+    # Take the temperature in fahrenheit and convert it to a float if it is not already
+    temp = float(temp_in_fahrenheit)
+    # Convert it into Celcius using the formula (F-32)/1.8 
+    celcius = (temp-32)/1.8
+    # Round it to 1 decimal place
+    rounded_celcius = round(celcius,1)
+    # Return the rounded value
+    return rounded_celcius
+
+#Example usage 
+temp_in_f = 61
+celcius = convert_f_to_c(temp_in_f)
+print (celcius)
+
+
+
+def calculate_mean(weather_data):
+    """Calculates the mean value from a list of numbers.
+
+    Args:
+        weather_data: a list of numbers.
+    Returns:
+        A float representing the mean value.
+    """
+    # take the list i.e. the weather_data 
+    numbers = [weather_data]
+    print (numbers)
+
+    # and calculate its mean
+    # but since it is a list, you will have to loop through each number in the list 
+    for num in numbers:
+        # formula to calculate mean
+        print(num)
+        mean = sum(num)/len(num)
+        return mean 
+
+# Example usage: 
+numbers = [51.0, 58.2, 59.9, 52.4, 52.1, 48.4, 47.8, 53.43]
+mean = calculate_mean(numbers)
+print (mean)
+
+
+
+def load_data_from_csv(csv_file):
+    """Reads a csv file and stores the data in a list.
+
+    Args:
+        csv_file: a string representing the file path to a csv file.
+    Returns:
+        A list of lists, where each sublist is a (non-empty) line in the csv file.
+    """
+    
+    # Open the csv file and read its contents
+    with open (csv_file) as file:  
+        # Use the csv module to read the file
+        reader = csv.reader(file)
+        # Convert the reader object to a list
+        csv_list = list(reader)
+        # Remove empty lines from the list
+        # What this does is it loops through each line in the csv_list and only keeps the lines that are not empty 
+        # Because in Python, an empty list is considered False, so the condition 'if line' will evaluate to True only for non-empty lines
+        # Replace csv_list with a new list that includes only the non-empty rows from the original csv_list
+        csv_list = [line for line in csv_list if line]  
+        # Return the list of lists
+    return csv_list
+    
+# Example usage:
+data = load_data_from_csv("./tests/data/example_two.csv")
+print (data)
+
+
+def find_min(weather_data):
+    """Calculates the minimum value in a list of numbers.
+
+    Args:
+        weather_data: A list of numbers.
+    Returns:
+        The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
+    """
+
+    # Check if the list is empty
+    if not weather_data:
+        # If it is, return an empty tuple
+        return ()   
+    
+    # Convert all elements to float to handle string inputs
+    weather_data = [float(i) for i in weather_data]     
+    # Find the minimum value in the list
+    min_value = min(weather_data)
+    # Find the position of the last occurrence of the minimum value
+    # To find the index of the last occurrence, we can reverse the list and find the index of the minimum value in the reversed list
+    #  Then, we subtract that index from the length of the original list minus one to get the correct position in the original list
+    # This works because the index in the reversed list corresponds to the distance from the end of the original list
+    # So, by subtracting that index from the length of the original list minus one, we get the index of the last occurrence in the original list
+    # For example, if the minimum value is at index 2 in the reversed list, and the length of the original list is 6, then the position in the original list is 6 - 1 - 2 = 3
+    # This gives us the correct index of the last occurrence of the minimum value in the original list
+    # Using this method ensures that we correctly identify the last occurrence even if the minimum value appears multiple times in the list
+    # This is important for the requirements of the function
+    position = len(weather_data) - 1 - weather_data[::-1].index(min_value)
+
+    # Return the minimum value and its position as a tuple
+    return (min_value, position)
+    
+ 
+#  Example usage 
+weather_data = [1,1,2]
+result = find_min(weather_data)
+print(result)
+
+
+    # how to check for the minimum, there is no other number smaller than it
+    # If that is true, check for its index
+    # If the number repeats itself, return the index of the last example in the list 
+
+
+
+
+
+#     numbers = [weather_data]
+#     min_value = numbers.index(min(numbers))
+#     return min_value
+
+# numbers = [9,8,7]
+# result = find_min(numbers)
+# print(result)
+
+# Can do: 6
+def find_max(weather_data):
+    """Calculates the maximum value in a list of numbers.
+
+    Args:
+        weather_data: A list of numbers.
+    Returns:
+        The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
+    """
+    pass
+
+# Can do: 7 - Google how to handle multi-line f strings and making paragraphs - you can check the output files and test examples to see what this file expects 
+def generate_summary(weather_data):
+    """Outputs a summary for the given weather data.
+
+    Args:
+        weather_data: A list of lists, where each sublist represents a day of weather data.
+    Returns:
+        A string containing the summary information.
+    """
+    pass
+    # Pick the path and all the values you need to calculate, lowest, date, day
+    # Create an empty min and mix list, and a day as the length of the weather data 
+    # Do a for loop
+    # Use the above defined functions and add teh degree symbol
+
+
+
+
+# Can do: 8 
+def generate_daily_summary(weather_data):
+    """Outputs a daily summary for the given weather data.
+
+    Args:
+        weather_data: A list of lists, where each sublist represents a day of weather data.
+    Returns:
+        A string containing the summary information.
+    """
+    pass

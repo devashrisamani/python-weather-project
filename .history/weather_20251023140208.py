@@ -72,16 +72,17 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    # Handle an empty list 
-    if not weather_data:
-        return 0.0
     # take the list i.e. the weather_data 
-    numbers = [float(num) for num in weather_data]
-    print(numbers)
+    numbers = [weather_data]
+    print (numbers)
 
     # and calculate its mean
-    mean = sum(numbers) / len(numbers)
-    return mean
+    # but since it is a list, you will have to loop through each number in the list 
+    for num in numbers:
+        # formula to calculate mean
+        print(num)
+        mean = sum(num)/len(num)
+        return mean 
 
 # Example usage: 
 numbers = [51.0, 58.2, 59.9, 52.4, 52.1, 48.4, 47.8, 53.43]
@@ -256,7 +257,42 @@ def generate_summary(weather_data):
     summary += f"  The average high this week is {avg_high_str}.\n"
     return summary
 
-    # First Attempt -incomplete
+    
+
+
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
     # weather_data = []
     # lowest_temp_day = find_min(weather_data)
     # highest_temp_day = find_max(weather_data)
@@ -267,6 +303,18 @@ def generate_summary(weather_data):
     # avg_high_combined = calculate_mean (list_highest_temp)
 
 
+    # 5 Day Overview
+#   The lowest temperature will be 9.4°C, and will occur on Friday 02 July 2021.
+#   The highest temperature will be 20.0°C, and will occur on Saturday 03 July 2021.
+#   The average low this week is 12.2°C.
+#   The average high this week is 17.8°C.
+
+
+
+
+
+
+# Can do: 8 
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
 
@@ -275,25 +323,4 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    if not weather_data:
-        return "I'd rather you google it"
-    
-    summary_str = "" 
-
-    for day_temp in weather_data:
-        iso_date = day_temp[0]
-        min_f = day_temp[1]
-        max_f = day_temp[2]
-        min_c = convert_f_to_c(min_f)
-        max_c = convert_f_to_c(max_f)
-        readable_date = convert_date(iso_date)
-        min_c_str = format_temperature(round(min_c,1))
-        max_c_str = format_temperature(round(max_c,1))
-
-        daily_summary = f"---- {readable_date} ----\n"
-        daily_summary += f"  Minimum Temperature: {min_c_str}\n"
-        daily_summary += f"  Maximum Temperature: {max_c_str}\n"
-        daily_summary += "\n"
-        summary_str += daily_summary
-
-    return summary_str  
+    pass
